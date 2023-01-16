@@ -1,0 +1,22 @@
+{
+    "Projects": [
+        {
+            "name": "NextJS",
+            "description": "The React framework for production",
+            "stack": [
+                "React",
+                "NodeJS",
+                "Typescript"
+            ]
+        },
+        {
+            "name": "typescript",
+            "description": "Strongly typed programming language that builds on JavaScript, giving you better tooling at any scale",
+            "stack": [
+                "React",
+                "NodeJS",
+                "Typescript"
+            ]
+        }
+    ]
+}

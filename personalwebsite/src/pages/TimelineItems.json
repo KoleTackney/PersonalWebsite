@@ -1,0 +1,34 @@
+{
+    "Moments": [
+        {
+            "name": "Warner Bros. Discovery",
+            "year": 2022,
+            "duration": "1 year",
+            "details": "The start of a new company, and a new product. I helped build the foundation of the product, creating the repo, CI/CD pipelines, and implementing the first features."
+        },
+        {
+            "name": "WarnerMedia",
+            "year": 2020,
+            "duration": "2 years",
+            "details": "Moving to a new team, with new responsibilities, I helped push the direction of technical decisions, build new CI/CD pipelines, as well as improve the developer experience."
+        },
+        {
+            "name": "You.i TV",
+            "year": 2018,
+            "duration": "1.5 years",
+            "details": "Starting as part of the test team, I moved into the SDK development team to help build on our existing engine, bringing the React framework to new devices, and improve the performance and reliability of the engine."
+        },
+        {
+            "name": "REL Controls",
+            "year": 2017,
+            "duration": "1.5 years",
+            "details": "Primarily a programmer, I helped design and build Building automation systems and the software interfaces to control them. I learned a lot about integrating hardware and software as well as how to create a system that is reliable and easy to use."
+        },
+        {
+            "name": "Graduate College",
+            "year": 2015,
+            "duration": "3 years",
+            "details": "Growing up, I always loved video games and wanted to learn how to produce my own. I wasn't sure how I could be a part of the process. Through learning all aspects of game development, from art to design, but when I started learning programming in C++ and later C#, I quickly realized programming was my passion."
+        }
+    ]
+}
