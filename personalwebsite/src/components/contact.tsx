@@ -47,8 +47,13 @@ export function Contact() {
             body: JSON.stringify(contact)
         });
 
-        console.log(response);
-        console.log(JSON.stringify(response.body));
+        if (!response.ok) {
+            alert("Something went wrong, please try again later");
+            return;
+        }
+        else {
+            alert("Message sent successfully");
+        }
     }
 
     return (
