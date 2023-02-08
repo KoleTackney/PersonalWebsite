@@ -1,63 +1,55 @@
 import { useState } from "react";
 import Title from "./title";
+import { trpc } from "../utils/trpc";
+import { date, z } from "zod";
 
-type ContactProps = {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-};
+const schema = z.object({
+  email: z.string().email(),
+  name: z.string().min(1),
+  message: z.string().min(1),
+  subject: z.string().min(1),
+});
 
 export function Contact() {
-  const [emailSent, setEmailSent] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const [subject, setSubject] = useState("");
+  const [sendEmail, setSendEmail] = useState(false);
+  trpc.email.sendEmail.useQuery({
+    name,
+    email,
+    subject,
+    message,
+  }, {
+    enabled: sendEmail,
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    //Loop through the form data and check if any fields are empty
-    const emptyFields: string[] = [];
-    formData.forEach((value, key) => {
-      if (value === "") {
-        emptyFields.push(key);
-      }
-    });
-
-    if (emptyFields.length > 0) {
-      let forgotToFillOut = "Please fill out the following fields: ";
-      emptyFields.forEach((field) => {
-        forgotToFillOut += field + ", ";
-        console.log(field);
+    try {
+      const data = schema.parse({
+        email: formData.get("email"),
+        name: formData.get("name"),
+        message: formData.get("message"),
+        subject: formData.get("subject"),
       });
-      alert(forgotToFillOut);
-      return;
-    }
 
-    const contact: ContactProps = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      subject: formData.get("subject") as string,
-      message: formData.get("message") as string,
-    };
-    // Replace with trpc call
-    const response = await fetch("/api/sendMail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify(contact),
-    });
-
-    if (!response.ok) {
-      alert("Something went wrong, please try again later");
+      setEmail(data.email);
+      setName(data.name);
+      setMessage(data.message);
+      setSubject(data.subject);
+      setSendEmail(true);
+    } catch (error) {
+      console.log(error);
+      alert("Please fill out all fields");
       return;
-    } else {
-      setEmailSent(true);
     }
   };
 
-  return emailSent
+  return sendEmail
     ? (
       <div className="flex flex-col mx-auto pb-10">
         <svg
@@ -89,6 +81,7 @@ export function Contact() {
               type="text"
               id="name"
               name="name"
+              required={true}
               placeholder="Name"
               className="p-2 bg-transparent border-2 rounded-md focus:outline-none"
             />
@@ -96,6 +89,7 @@ export function Contact() {
               type="email"
               id="email"
               name="email"
+              required={true}
               placeholder="Email Adress"
               className="my-2 p-2 bg-transparent border-2 rounded-md focus:outline-none"
             />
@@ -103,12 +97,14 @@ export function Contact() {
               type="text"
               id="subject"
               name="subject"
+              required={true}
               placeholder="Subject"
               className="my-2 p-2 bg-transparent border-2 rounded-md focus:outline-none"
             />
             <textarea
               id="message"
               name="message"
+              required={true}
               placeholder="Message"
               className="p-2 bg-transparent border-2 rounded-md focus:outline-none"
             />
